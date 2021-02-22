@@ -1,0 +1,2 @@
+MATCH(d:date_dim{d_moy:12, d_year:1998})<-[:ON_Date]-(ss:store_sales) with ss MATCH(i:item{i_manager_id:38})<-[:OF_Item]-(ss:store_sales) with i, ss MATCH(s:store)-[:AT_Store]-(ss:store_sales) WITH s, ss , i MATCH(c:customer)-[:BY_Customer]-(ss:store_sales) WITH  c, s, ss, i
+ where Substring(s.s_zip, 0, 5)<>substring(c.ca_zip, 0, 5) RETURN i.i_brand_id as brand_id, i.i_brand as brand, i.i_manufact_id, i.i_manufact, sum(ss.ss_ext_sales_price) as ext_price ORDER  BY ext_price DESC, i.i_brand, i.i_brand_id, i.i_manufact_id, i.i_manufact limit 100; 
