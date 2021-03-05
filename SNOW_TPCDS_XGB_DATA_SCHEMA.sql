@@ -1,13 +1,4 @@
-{\rtf1\ansi\ansicpg1252\cocoartf2578
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fmodern\fcharset0 Courier;}
-{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
-{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww25100\viewh15700\viewkind0
-\deftab720
-\pard\pardeftab720\partightenfactor0
-
-\f0\fs24 \cf2 \expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 create database snow_data_X;\
+create database snow_data_X;\
 use snow_data_X;\
 create table customer_address\
 (\
@@ -61,16 +52,10 @@ create table customer\
     c_last_review_date        char(10)                      ,\
     primary key (c_customer_sk)\
 );\
-LOAD DATA LOCAL INFILE '/home/tpcds/tpcds_data_X/customer_address.csv' INTO TABLE customer_address FIELDS TERMINATED BY '|' LINES TERMINATED BY '\\n' ;\
-LOAD DATA LOCAL INFILE '/home/tpcds/tpcds_data_X/customer_demographics.csv' INTO TABLE customer_demographics FIELDS TERMINATED BY '|' LINES TERMINATED BY '\\n' ;\
-LOAD DATA LOCAL INFILE '/home/tpcds/tpcds_data_X/customer.csv' INTO TABLE customer FIELDS TERMINATED BY '|' LINES TERMINATED BY '\\n' ;\
 ALTER TABLE customer DROP COLUMN c_first_sales_date_sk;\
 ALTER TABLE customer DROP COLUMN c_first_shipto_date_sk;\
 create table cust_addr select distinct(ca_address_sk), ca_address_id, ca_street_number, ca_street_name, ca_street_type, ca_suite_number, ca_city, ca_county, ca_state, ca_zip, ca_country, ca_gmt_offset, ca_location_type  from customer c left join customer_address ca on c.c_current_addr_sk=ca.ca_address_sk;\
 create table cust_demo select distinct(cd_demo_sk), cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating ,  cd_dep_count, cd_dep_employed_count, cd_dep_college_count from customer c left join customer_demographics cd on c.c_current_cdemo_sk=cd_demo_sk;\
-select * into outfile '/var/lib/mysql/customer_demographics.csv' FIELDS TERMINATED BY '|' LINES TERMINATED BY '\\n' FROM cust_demo;\
-select * into outfile '/var/lib/mysql/customer_address.csv' FIELDS TERMINATED BY '|' LINES TERMINATED BY '\\n' FROM cust_addr;\
-select * into outfile '/var/lib/mysql/customer.csv' FIELDS TERMINATED BY '|' LINES TERMINATED BY '\\n' FROM customer;\
 create table store_sales\
 (\
     ss_sold_date_sk           integer                       ,\
@@ -98,11 +83,6 @@ create table store_sales\
     ss_net_profit             decimal(7,2)                  ,\
     primary key (ss_item_sk, ss_ticket_number)\
 );\
-LOAD DATA LOCAL INFILE '/home/tpcds/tpcds_data_X/store_sales.csv' INTO TABLE store_sales FIELDS TERMINATED BY '|' LINES TERMINATED BY '\\n' ; \
-ALTER TABLE store_sales DROP COLUMN ss_hdemo_sk;\
-ALTER TABLE store_sales DROP COLUMN ss_cdemo_sk;\
-ALTER TABLE store_sales DROP COLUMN ss_addr_sk;\
-select * into outfile '/var/lib/mysql/store_sales.csv' FIELDS TERMINATED BY '|' LINES TERMINATED BY '\\n' FROM store_sales;\
 create table store\
 (\
     s_store_sk                integer               not null,\
@@ -159,12 +139,7 @@ create table promotion\
     p_discount_active         char(1)                       ,\
     primary key (p_promo_sk)\
 );\
-LOAD DATA LOCAL INFILE '/home/tpcds/tpcds_data_X/store.csv' INTO TABLE store FIELDS TERMINATED BY '|' LINES TERMINATED BY '\\n' ;\
-LOAD DATA LOCAL INFILE '/home/tpcds/tpcds_data_X/promotion.csv' INTO TABLE promotion FIELDS TERMINATED BY '|' LINES TERMINATED BY '\\n' ;\
-ALTER TABLE promotion DROP COLUMN p_end_date_sk;\
+ALTER TABLE promotion DROP COLUMN p_end_date_sk;
 ALTER TABLE promotion DROP COLUMN p_item_sk;\
 ALTER TABLE promotion DROP COLUMN p_start_date_sk;\
 ALTER TABLE store DROP COLUMN s_closed_date_sk;\
-select * into outfile '/var/lib/mysql/store.csv' FIELDS TERMINATED BY '|' LINES TERMINATED BY '\\n' FROM store;\
-select * into outfile '/var/lib/mysql/promotion.csv' FIELDS TERMINATED BY '|' LINES TERMINATED BY '\\n' FROM promotion;\
-}
