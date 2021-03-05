@@ -244,8 +244,8 @@ create table store_sales
     primary key (ss_item_sk, ss_ticket_number)
 );
 
-LOAD DATA LOCAL INFILE '/home/tpcds/snow/snow_data_3GB/store.csv' INTO TABLE store FIELDS TERMINATED BY '|' LINES TERMINATED BY '\n' ;
-LOAD DATA LOCAL INFILE '/home/tpcds/snow/snow_data_3GB/item.csv' INTO TABLE item FIELDS TERMINATED BY '|' LINES TERMINATED BY '\n' ;
-LOAD DATA LOCAL INFILE '/home/tpcds/snow/snow_data_3GB/promotion.csv' INTO TABLE promotion FIELDS TERMINATED BY '|' LINES TERMINATED BY '\n' ;
-LOAD DATA LOCAL INFILE '/home/tpcds/snow/snow_data_3GB/store_sales.csv' INTO TABLE store_sales FIELDS TERMINATED BY '|' LINES TERMINATED BY '\n' ;
+LOAD DATA LOCAL INFILE '/home/tpcds/snow/snow_data_XGB/store.csv' INTO TABLE store FIELDS TERMINATED BY '|' LINES TERMINATED BY '\n' ;
+LOAD DATA LOCAL INFILE '/home/tpcds/snow/snow_data_XGB/item.csv' INTO TABLE item FIELDS TERMINATED BY '|' LINES TERMINATED BY '\n' ;
+LOAD DATA LOCAL INFILE '/home/tpcds/snow/snow_data_XGB/promotion.csv' INTO TABLE promotion FIELDS TERMINATED BY '|' LINES TERMINATED BY '\n' ;
+LOAD DATA LOCAL INFILE '/home/tpcds/snow/snow_data_XB/store_sales.csv' INTO TABLE store_sales FIELDS TERMINATED BY '|' LINES TERMINATED BY '\n' ;
 select * into outfile '/var/lib/mysql/customer.csv' FIELDS TERMINATED BY '|' LINES TERMINATED BY '\n' FROM customer;
